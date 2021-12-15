@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <mapper namespace="sample">
+  
+  	<resultMap type="SampleDto" id="sampleMap">
+  		<result property="spNo" column="SPNO"/>
+  		<result property="spName" column="SPNAME"/>
+  		<result property="spTitle" column="SPTITLE"/>
+  		<result property="spContent" column="SPCONTENT"/>
+  		<result property="spDate" column="SPDATE"/>
+  	</resultMap>
+  	
+  	<select id="selectList" resultMap="sampleMap">
+  		SELECT SPNO,
+  			   SPNAME,
+  			   SPTITLE,
+  			   SPCONTENT,
+  			   SPDATE
+  		FROM SAMPLE
+  		ORDER BY SPNO DESC
+  	</select>
+  	
+  	<select id="selectOne" parameterType="int" resultType="SampleDto">
+  		SELECT SPNO,
+  			   SPNAME,
+  			   SPTITLE,
+  			   SPCONTENT,
+  			   SPDATE
+  		FROM   SAMPLE
+  		WHERE  SPNO=#{spNo}
+  	</select>
+  	
+  	<insert id="insert" parameterType="SampleDto">
+  		INSERT INTO SAMPLE
+  		VALUES(SPSEQ.NEXTVAL,#{spName},#{spTitle},#{spContent},SYSDATE)
+  	</insert>
+  	
+  	<update id="update" parameterType="SampleDto">
+  		UPDATE SAMPLE
+  		SET SPNAME=#{spName}, SPTITLE=#{spTitle}, SPCONTENT=#{spContent}
+  		WHERE SPNO=#{spNo}
+  	</update>
+  	
+  	<delete id="delete" parameterType="int">
+  		DELETE
+  		FROM SAMPLE
+  		WHERE SPNO=#{spNo}
+  	</delete>
+  </mapper>
